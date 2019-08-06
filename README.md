@@ -4,7 +4,7 @@
 
 This is my repository, which I will host all code related to Enterprise JavaScript II with Professor Richard Krasso.
 
-# contributors
+# Contributors
 
 Professor Krasso - Bellevue University
 
