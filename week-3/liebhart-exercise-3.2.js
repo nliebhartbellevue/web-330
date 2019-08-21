@@ -49,6 +49,7 @@ function MySql(properties) {
   this.version = properties.version || 5.7;
 }
 
+// Create Oracle Database class with 4 properties
 function Oracle(properties) {
   this.username = properties.username || "admin";
   this.password = properties.password || "o-s3cret";
@@ -56,6 +57,7 @@ function Oracle(properties) {
   this.version = properties.version || "10g";
 }
 
+// Create Infomix Database class with 3 properties
 function Informix(properties) {
   this.username = properties.username || "admin";
   this.password = properties.password || "in-s3cret";
@@ -66,6 +68,7 @@ function DatabaseFactory() {}
 
 DatabaseFactory.prototype.databaseClass = MySql;
 DatabaseFactory.prototype.createDatabase = function(properties) {
+  // Check for databaseType and set databaseClass
   if (properties.databaseType === "Postgres") {
     this.databaseClass = Postgres;
   }
@@ -96,6 +99,7 @@ var mySql = mySqlFactory.createDatabase({
   password: "password"
 });
 
+// Create oracleFactory
 var oracleFactory = new DatabaseFactory();
 var oracle = oracleFactory.createDatabase({
   databaseType: "Oracle",
@@ -103,6 +107,7 @@ var oracle = oracleFactory.createDatabase({
   password: "admin"
 });
 
+// Create informixFactory
 var informixFactory = new DatabaseFactory();
 var informix = informixFactory.createDatabase({
   databaseType: "Informix",
@@ -110,6 +115,7 @@ var informix = informixFactory.createDatabase({
   password: "password"
 });
 
+// Print output in excepted format
 console.log(`Oracle {
     username: ${oracle.username},
     password: ${oracle.password},
