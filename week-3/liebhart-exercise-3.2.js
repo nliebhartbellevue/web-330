@@ -11,7 +11,7 @@
  * Description: Returns formatted header string
  */
 const header = require("../liebhart-header");
-console.log(header("Nathaniel", "Liebhart", "Exercise 1.3") + "\n");
+console.log(header("Nathaniel", "Liebhart", "Exercise 3.2") + "\n");
 
 /*
  Expected output:
