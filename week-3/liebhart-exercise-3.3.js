@@ -25,7 +25,7 @@ console.log(header("Nathaniel", "Liebhart", "Exercise 3.3") + "\n");
 */
 
 // start program
-const DatabaseSingleton = () => {
+var DatabaseSingleton = (function() {
   let instance;
 
   const createInstance = () => {
@@ -34,12 +34,20 @@ const DatabaseSingleton = () => {
   };
 
   return {
-    getInstance: () => {
+    getInstance: function() {
       if (!instance) {
         instance = createInstance();
       }
       return instance;
     }
   };
+})();
+
+const databaseSingletonTest = () => {
+  const oracle = DatabaseSingleton.getInstance();
+  let postgres = DatabaseSingleton.getInstance();
+  console.log(`Same database instance? ${oracle === postgres}`);
 };
+
+databaseSingletonTest();
 // end program
