@@ -1,0 +1,42 @@
+<!-- 
+    Title:          Exercise 4.3
+    Author:         Nathaniel Liebhart
+    Date:           August 30, 2019
+    Description:    HTTP PUT and DELETE Operations
+ -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Assignment name</title>
+
+    <!-- jQuery reference -->
+    <script
+      type="text/javascript"
+      src="https://gc.kis.v2.scr.kaspersky-labs.com/5DACB2B0-5003-6543-8B39-D8EE6E4FC44C/main.js"
+      charset="UTF-8"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <button id="btnDelete">Delete</button>
+
+    <script>
+      $(function() {
+        $("#btnDelete").on("click", () => {
+          $.ajax({
+            url: "http://httpbin.org/delete",
+            dataType: "json",
+            type: "DELETE",
+            data: { name: "John", age: 32, active: true },
+            success: (data, status) => {
+              console.log(
+                ` Name: ${data.form.name}\n Age: ${data.form.age}\n Active: ${data.form.active}`
+              );
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
