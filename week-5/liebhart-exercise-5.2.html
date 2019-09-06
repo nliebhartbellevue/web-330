@@ -1,0 +1,69 @@
+<!-- 
+    Title:          Exercise 5.2
+    Author:         Nathaniel Liebhart
+    Date:           September 6th, 2019
+    Description:    The Proxy Pattern 
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exercise 5.2 - The Proxy Pattern</title>
+
+    <!-- jquery Reference Library -->
+    <!-- <script
+      type="text/javascript"
+      src="https://gc.kis.v2.scr.kaspersky-labs.com/5DACB2B0-5003-6543-8B39-D8EE6E4FC44C/main.js"
+      charset="UTF-8"
+    ></script> -->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Exercise 5.2</h2>
+    <button id="btnTest">Run Test</button>
+    <br />
+    <span id="proxyOne"></span>
+
+    <script>
+      $(function() {
+        const employee = {
+          name: "John Doe",
+          department: "Web Development",
+          years: 5,
+
+          display: function() {
+            var output = `
+                    <ul>
+                        <li>Hi my name is ${this.name},</li>
+                        <li>I have worked in the ${this.department} department</li>
+                        <li>for ${this.years} years.</li>
+                    </ul>
+                `;
+
+            $("#proxyOne").html("");
+            $("#proxyOne").append(output);
+          }
+        };
+
+        $("#btnTest").click($.proxy(employee, "display"));
+      });
+    </script>
+  </body>
+</html>
