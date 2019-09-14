@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Exercise 6.2</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+      integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+      crossorigin="anonymous"
+    />
+
+    <script src="../knockout-3.5.0.js"></script>
+  </head>
+  <body>
+    <div style="padding: 5rem;" class="container">
+      <div class="form-group">
+        <!-- Form used to bind values with Knockout.js -->
+        <label for="firstName">First Name:</label>
+        <input
+          type="text"
+          class="form-control alert-info"
+          data-bind="value: firstName"
+          id="firstName"
+        />
+
+        <label for="lastName">Last Name:</label>
+        <input
+          type="text"
+          class="form-control alert-info"
+          data-bind="value: lastName"
+          id="lastName"
+        />
+
+        <label for="email">Email Address:</label>
+        <input
+          type="email"
+          class="form-control alert-info"
+          data-bind="value: email"
+          id="email"
+        />
+      </div>
+    </div>
+    <script>
+      // Knockout.js ViewModel with obserable
+      function PersonViewModel() {
+        (this.firstName = ko.observable("John")),
+          (this.lastName = ko.observable("Doe")),
+          (this.email = ko.observable("jdoe@email.com"));
+      }
+
+      // Subscribe to the PersonViewModel's obserables
+      ko.applyBindings(new PersonViewModel());
+    </script>
+  </body>
+</html>
