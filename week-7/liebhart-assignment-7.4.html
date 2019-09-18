@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Assignment 7.4</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+      integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+      crossorigin="anonymous"
+    />
+
+    <!-- JavaScript Libraries -->
+    <script
+      type="text/javascript"
+      src="https://gc.kis.v2.scr.kaspersky-labs.com/5DACB2B0-5003-6543-8B39-D8EE6E4FC44C/main.js"
+      charset="UTF-8"
+    ></script>
+    <script src="../knockout-3.5.0.js"></script>
+  </head>
+  <body>
+    <div class="container" role="main">
+      <h2>JavaScript Tutorials</h2>
+
+      <table class="table table-dark table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+
+        <tbody data-bind="foreach: tutorial">
+          <tr>
+            <td data-bind="text: title, style: {'font-weight': 'bold'}"></td>
+            <td data-bind="text: description"></td>
+            <td>
+              <a
+                class="btn btn-success"
+                data-bind="attr: {href: url, target: '_blank'}, style: {'color': 'blue'}"
+                >Watch NOW</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // JSTutorialViewModel
+      function JSTutorialViewModel() {
+        this.tutorial = ko.observableArray([
+          {
+            title: "JavaScript Crash Course For Beginners",
+            description:
+              "In this crash course we will go over the fundamentals of JavaScript including more modern syntax like classes, arrow functions, etc. This is the starting point on my channel for learning JS.",
+            url:
+              "https://www.youtube.com/watch?v=hdI2bqOjy3c&list=PLillGF-RfqbYeckUaD1z6nviTp31GLTH8&index=4&t=0s"
+          },
+          {
+            title: "React JS Crash Course - 2019",
+            description:
+              "In this crash course you will learn what React JS is and the fundamentals such as components, state, props, JSX, events, etc.",
+            url:
+              "https://www.youtube.com/watch?v=sBws8MSXN7A&list=PLillGF-RfqbYeckUaD1z6nviTp31GLTH8&index=5&t=0s"
+          },
+          {
+            title: "Vue JS Crash Course - 2019",
+            description:
+              "In this crash course you will learn all about Vue.js including what it is, Vue-CLI, components, data, events, directives, etc.",
+            url:
+              "https://www.youtube.com/watch?v=Wy9q22isx3U&list=PLillGF-RfqbYeckUaD1z6nviTp31GLTH8&index=6&t=0s"
+          },
+          {
+            title: "Angular Crash Course - 2019",
+            description:
+              "In this video we will talk about what Angular is and then jump in and build a small app With Angular 7, looking at most of the fundamental concepts like components, services, modules, etc.",
+            url:
+              "https://www.youtube.com/watch?v=Fdf5aTYRW0E&list=PLillGF-RfqbYeckUaD1z6nviTp31GLTH8&index=7&t=3603s"
+          },
+          {
+            title: "Node.js Crash Course",
+            description:
+              "In this crash course we will explore Node.js fundamentals including modules such as path, url, fs, events and we will create an HTTP server from scratch without Express and deploy to Heroku.",
+            url:
+              "https://www.youtube.com/watch?v=fBNz5xF-Kx4&list=PLillGF-RfqbYeckUaD1z6nviTp31GLTH8&index=8&t=13s"
+          }
+        ]);
+      }
+
+      // Bind ViewModel
+      ko.applyBindings(new JSTutorialViewModel());
+    </script>
+  </body>
+</html>
