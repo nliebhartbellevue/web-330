@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Assignment 8.4</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+      integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+      crossorigin="anonymous"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- JavaScript Libraries -->
+    <!-- <script
+      type="text/javascript"
+      src="https://gc.kis.v2.scr.kaspersky-labs.com/5DACB2B0-5003-6543-8B39-D8EE6E4FC44C/main.js"
+      charset="UTF-8"
+    ></script> -->
+    <script src="../knockout-3.5.0.js"></script>
+  </head>
+  <body>
+    <div class="container pt-5" role="main">
+      <h2>CRUD Example</h2>
+
+      <!-- Error -->
+      <div class="row" data-bind="if: error">
+        <div class="col-sm-12">
+          <div class="alert alert-danger" role="alert">
+            <b>ERROR!</b> <span data-bind="text: error()"></span>
+          </div>
+        </div>
+      </div>
+      <!-- form -->
+      <div class="row">
+        <div class="col-sm-6">
+          <!-- Add Employee Card -->
+          <div
+            class="card card-inverse"
+            style="background-color:blueviolet;border-color:darkmagenta;color:white;"
+          >
+            <div class="card-block p-3">
+              <!-- Card title -->
+              <div class="card-title">
+                Add Employee
+              </div>
+              <div class="card-text">
+                <div class="form-group row">
+                  <!-- Employee Name -->
+                  <label for="name" class="col-2 col-form-label">Name:</label>
+                  <div class="col-sm-6">
+                    <input
+                      type="text"
+                      data-bind="value: nameToAdd, valueUpdate: 'afterkeydown'"
+                      class="form-control"
+                      id="name"
+                    />
+                  </div>
+                </div>
+                <!-- Hours Worked -->
+                <div class="form-group row">
+                  <label for="hours" class="col-2 col-form-label"
+                    >Hours Worked:</label
+                  >
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      id="hours"
+                      step="0.25"
+                      placeholder="0.00"
+                      data-bind="value: hoursToAdd, valueUpdate: 'afterkeydown'"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <!-- Pay Rate -->
+                <div class="form-group row">
+                  <label for="payrate" class="col-2 col-form-label"
+                    >Pay Rate:</label
+                  >
+                  <div class="col-sm-6">
+                    <input
+                      type="number"
+                      step="0.25"
+                      placeholder="7.25"
+                      data-bind="value: payrateToAdd, valueUpdate: 'afterkeydown'"
+                      class="form-control"
+                      id="payrate"
+                    />
+                  </div>
+                </div>
+                <!-- Add Employee Button -->
+                <div class="form-group">
+                  <div class="col-sm-8">
+                    <a
+                      href="#"
+                      data-bind="click: add"
+                      class="btn btn-lg btn-primary"
+                      >ADD</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Employee List -->
+      <div class="row pt-5">
+        <div class="col-sm-12">
+          <!-- List Card -->
+          <div
+            class="card card-inverse"
+            style="background-color:deepskyblue;border-color:dodgerblue;color:black;"
+          >
+            <div class="card-block p-3">
+              <!-- Card Title -->
+              <div class="card-title">
+                Employee List
+              </div>
+              <div class="card-text">
+                <!-- Employees List Table -->
+                <table class="table table-dark table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>Employee ID</th>
+                      <th>Name</th>
+                      <th>Hours Worked</th>
+                      <th>Pay Rate</th>
+                      <th>Total</th>
+                      <th>Functions</th>
+                    </tr>
+                  </thead>
+                  <tbody data-bind="foreach: Employees">
+                    <tr>
+                      <td data-bind="text: id"></td>
+                      <td data-bind="text: name"></td>
+                      <td data-bind="text: hours"></td>
+                      <td data-bind="text: payrate"></td>
+                      <td data-bind="text: formatCurrency(total())"></td>
+                      <td>
+                        <div class="btn-group">
+                          <a
+                            href="#"
+                            data-bind="click: $root.edit"
+                            class="btn btn-info"
+                          >
+                            <i class="fa fa-pencil fa-lg"></i> EDIT
+                          </a>
+                          <a
+                            href="#"
+                            data-bind="click: $root.remove"
+                            class="btn btn-danger"
+                          >
+                            <i class="fa fa-trash fa-lg"></i> DELETE
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- If Employee in Employees then Edit Employee Form -->
+        <div class="col-sm-4 pt-5" data-bind="if: Employee">
+          <div
+            class="card card-inverse"
+            style="background-color:firebrick;border-color:linen;color:white;"
+          >
+            <div class="card-block p-3">
+              <h3 class="card-title">Employee List</h3>
+              <div class="card-text">
+                <div class="form-group">
+                  <label for="editName">Name:</label>
+                  <input
+                    type="text"
+                    data-bind="value: Employee().name"
+                    class="form-control"
+                    id="editName"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editHours">Hours Worked:</label>
+                  <input
+                    type="number"
+                    data-bind="value: Employee().hours"
+                    class="form-control"
+                    step="0.25"
+                    id="editHours"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editPayrate">Pay Rate:</label>
+                  <input
+                    type="number"
+                    data-bind="value: Employee().payrate"
+                    class="form-control"
+                    step="0.25"
+                    id="editPayrate"
+                  />
+                </div>
+                <div class="form-group float-right btn-group">
+                  <button class="btn-warning" data-bind="click: $root.cancel">
+                    CANCEL
+                  </button>
+                  <button
+                    class="btn btn-success"
+                    data-bind="click: $root.update"
+                  >
+                    SAVE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Employee Class
+      class Employee {
+        constructor(id, name, hours, payrate) {
+          this.id = id;
+          this.name = name;
+          this.hours = hours;
+          this.payrate = payrate;
+
+          this.total = () => {
+            return hours * payrate;
+          };
+        }
+      }
+
+      // Employee Array
+      let employeeList = [
+        new Employee(1, "John Doe", 10.5, 16.25),
+        new Employee(2, "Sue Johnson", 20.25, 15.5),
+        new Employee(3, "Tim Smith", 35.0, 14.75),
+        new Employee(4, "Tammy White", 26.25, 19.25),
+        new Employee(5, "Jim Davis", 45.0, 38.5)
+      ];
+
+      const formatCurrency = value => {
+        return "$" + value.toFixed(2);
+      };
+
+      function PayrollViewModel() {
+        let self = this;
+        // observables
+        self.error = ko.observable("");
+        self.id = ko.observable("");
+        self.name = ko.observable("");
+        self.hours = ko.observable("");
+        self.payrate = ko.observable("");
+        self.nameToAdd = ko.observable("");
+        self.hoursToAdd = ko.observable("");
+        self.payrateToAdd = ko.observable("");
+        self.Employee = ko.observable();
+
+        // Observable Array
+        self.Employees = ko.observableArray(employeeList);
+
+        // Assign Employee
+        let Employee = {
+          id: self.id,
+          name: self.name,
+          hours: self.hours,
+          payrate: self.payrate
+        };
+
+        // Total function ko.computed
+        self.total = ko.computed(() => {
+          return self.Employee()
+            ? self.Employee().hours * self.Employee().payrate
+            : 0;
+        });
+
+        // Add Employee to employeeList
+        self.add = () => {
+          const name = self.nameToAdd();
+          const hours = self.hoursToAdd();
+          const payrate = self.payrateToAdd();
+
+          if (
+            self.nameToAdd() !== "" &&
+            self.checkName(self.Employees(), name) !== true
+          ) {
+            self.error("");
+            const id = employeeList.length + 1;
+            const name = this.nameToAdd();
+            const hours = this.hoursToAdd();
+            const payrate = this.payrateToAdd();
+
+            const newEmployee = new Employee(id, name, hours, payrate);
+            self.Employees.push(newEmployee);
+          } else {
+            self.error("Duplicate or Invalid Entry!");
+          }
+          self.nameToAdd("");
+          self.hoursToAdd(0.0);
+          self.payrateToAdd(7.25);
+        };
+
+        // Edit function
+        self.edit = Employee => {
+          self.Employee(Employee);
+        };
+
+        // Remove function
+        self.remove = Employee => {
+          self.Employees.remove(Employee);
+        };
+
+        // Cancel function
+        self.cancel = () => {
+          self.Employee(null);
+        };
+
+        // Update function
+        self.update = () => {
+          let tempEmp = self.Employee();
+          self.Employees.remove(self.Employee());
+          self.Employees.push(tempEmp);
+          self.sort();
+        };
+
+        // Sort function
+        self.sort = () => {
+          self.Employees.sort((a, b) => {
+            return a.id - b.id;
+          });
+        };
+
+        // checkName function
+        self.checkName = (array, name) => {
+          for (var i = 0; i < array.length; i++) {
+            let emp = array[i];
+            for (let key in emp) {
+              if (emp.hasOwnProperty(key)) {
+                let property = emp[key];
+                if (property === name) {
+                  return true;
+                }
+              }
+            }
+          }
+          return false;
+        };
+      }
+
+      ko.applyBindings(new PayrollViewModel());
+    </script>
+  </body>
+</html>
