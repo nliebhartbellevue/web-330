@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Exercise 8.3</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+      integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+      crossorigin="anonymous"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- JavaScript Libraries -->
+    <!-- <script
+      type="text/javascript"
+      src="https://gc.kis.v2.scr.kaspersky-labs.com/5DACB2B0-5003-6543-8B39-D8EE6E4FC44C/main.js"
+      charset="UTF-8"
+    ></script> -->
+    <script src="../knockout-3.5.0.js"></script>
+  </head>
+  <body>
+    <div class="container pt-5" role="main">
+      <!-- Error -->
+      <div class="row" data-bind="if: error">
+        <div class="col-sm-12">
+          <div class="alert alert-danger" role="alert">
+            <b>ERROR!</b><span data-bind="text: error()"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- List Title -->
+      <h2>UD Example</h2>
+      <!-- Card -->
+      <div class="row">
+        <div class="col-sm-8">
+          <div
+            class="card card-inverse"
+            style="background-color: #333;border-color: #333;color: white;"
+          >
+            <div class="card-block p-3">
+              <!-- Card Title -->
+              <div class="card-title">Employee List</div>
+              <div class="card-text">
+                <!-- Employee Table -->
+                <table class="table table-dark table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>Employee ID</th>
+                      <th>Name</th>
+                      <th>Functions</th>
+                    </tr>
+                  </thead>
+                  <!-- KO foreach binding -->
+                  <tbody data-bind="foreach: Employees">
+                    <tr>
+                      <td data-bind="text: id"></td>
+                      <td data-bind="text: name"></td>
+                      <td>
+                        <div class="btn-group">
+                          <a
+                            href="#"
+                            data-bind="click: $root.edit"
+                            class="btn btn-info"
+                          >
+                            <i class="fa fa-pencil-fa-lg"></i> EDIT
+                          </a>
+                          <a
+                            href="#"
+                            data-bind="click: $root.remove"
+                            class="btn btn-danger"
+                          >
+                            <i class="fa fa-trash fa-lg"></i> DELETE
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- If employee then list employee -->
+        <div class="col-sm-4" data-bind="if: Employee">
+          <div
+            class="card card-inverse"
+            style="background-color: aquamarine; border-color: blue;color: white"
+          >
+            <div class="card-block p-3">
+              <h3 class="card-title">Employee List</h3>
+              <div class="card-text">
+                <div class="form-group">
+                  <label for="name" class="col-form-label">Name:</label>
+                  <input
+                    type="text"
+                    id="name"
+                    data-bind="value: Employee().name"
+                    class="form-control"
+                  />
+                </div>
+                <div class="form-group btn-group float-right">
+                  <button
+                    class="btn btn-warning"
+                    data-bind="click: $root.cancel"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    class="btn btn-success"
+                    data-bind="click: $root.update"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Employee Class
+      class Employee {
+        constructor(id, name) {
+          this.id = id;
+          this.name = name;
+        }
+      }
+
+      // Employee Array
+      let employeeList = [
+        new Employee(1, "John"),
+        new Employee(2, "Jim"),
+        new Employee(3, "Jane"),
+        new Employee(4, "Kim"),
+        new Employee(5, "Stan")
+      ];
+
+      // View Model
+      function EmployeeViewModel() {
+        let self = this;
+        self.error = ko.observable("");
+        self.id = ko.observable("");
+        self.name = ko.observable("");
+
+        let Employee = {
+          id: self.id,
+          name: self.name
+        };
+
+        // Assign observable Array
+        self.Employee = ko.observable();
+        self.Employees = ko.observableArray(employeeList);
+
+        // Edit function
+        self.edit = Employee => {
+          self.Employee(Employee);
+        };
+
+        // Remove function
+        self.remove = Employee => {
+          self.Employees.remove(Employee);
+        };
+
+        // Cancel function
+        self.cancel = () => {
+          self.Employee(null);
+        };
+
+        // Update function
+        self.update = () => {
+          let tempEmp = self.Employee();
+          self.Employees.remove(self.Employee());
+          self.Employees.push(tempEmp);
+          self.sort();
+          self.cancel();
+        };
+
+        // Sort function
+        self.sort = () => {
+          self.Employees.sort((a, b) => {
+            return a.id - b.id;
+          });
+        };
+      }
+
+      ko.applyBindings(new EmployeeViewModel());
+    </script>
+  </body>
+</html>
