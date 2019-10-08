@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JEOPARDY</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:400,900"
+      rel="stylesheet"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/knockout-3.5.0.js"></script>
+    <script type="text/javascript" src="js/knockout-mapping-v2.4.1.js"></script>
+  </head>
+  <body>
+    <div id="mainSidebar" class="sidebar">
+      <div class="hamburger-container" onclick="hamburgerFunc(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+      <div id="lBContainer" class="glow">
+        <div class="row">
+          <div class="name">Expert</div>
+          <div class="score">100% - 80%</div>
+        </div>
+        <div class="row">
+          <div class="name">Novice</div>
+          <div class="score">79% - 60%</div>
+        </div>
+        <div class="row">
+          <div class="name">Beginner</div>
+          <div class="score">Less than 60%</div>
+        </div>
+      </div>
+    </div>
+
+    <header>JEOPARDY</header>
+    <section class="players-section">
+      <div class="player-cards">
+        <p class="player-one-card"></p>
+        <p name="score" class="player-one-score players-scoreCards"></p>
+        <p
+          data-bind="text: rightAnswers"
+          name="right"
+          class="player-one-right players-scoreCards"
+        ></p>
+        <p
+          data-bind="text: wrongAnswers"
+          name="wrong"
+          class="player-one-wrong players-scoreCards"
+        ></p>
+        <span id="totalAnswered" data-bind="text: totalAnswered"></span><br />
+
+        <span id="players-percentage" data-bind="text: overallScore"></span>
+      </div>
+      <input
+        class="player-one players"
+        placeholder="PLAYER 1"
+        name="Player 1"
+        name="name"
+      />
+    </section>
+    <div class="btn-wrap" role="button wrapper for styling">
+      <button class="start-btn">START</button>
+      <p class="round-display">ROUND 1</p>
+      <button class="end-btn">END</button>
+    </div>
+    <section>
+      <ul id="category-1" class="categories">
+        <li class="category-card-one category-cards">Category</li>
+        <li data-question class="question-cards">100</li>
+        <li data-question class="question-cards">200</li>
+        <li data-question class="question-cards">500</li>
+        <li data-question class="question-cards">1000</li>
+        <li data-question class="question-cards">2000</li>
+      </ul>
+      <ul id="category-2" class="categories">
+        <li class="category-card-two category-cards">Category</li>
+        <li data-question class="question-cards">100</li>
+        <li data-question class="question-cards">200</li>
+        <li data-question class="question-cards">500</li>
+        <li data-question class="question-cards">1000</li>
+        <li data-question class="question-cards">2000</li>
+      </ul>
+      <ul id="category-3" class="categories">
+        <li class="category-card-three category-cards">Category</li>
+        <li data-question class="question-cards">100</li>
+        <li data-question class="question-cards">200</li>
+        <li data-question class="question-cards">500</li>
+        <li data-question class="question-cards">1000</li>
+        <li data-question class="question-cards">2000</li>
+      </ul>
+      <ul id="category-4" class="categories">
+        <li class="category-card-four category-cards">Category</li>
+        <li data-question class="question-cards">100</li>
+        <li data-question class="question-cards">200</li>
+        <li data-question class="question-cards">500</li>
+        <li data-question class="question-cards">1000</li>
+        <li data-question class="question-cards">2000</li>
+      </ul>
+    </section>
+    <div class="question-window">
+      <p class="question-clue"></p>
+      <ul class="question-hints">
+        <h5 class="hints">Hints</h5>
+        <p class="lead hints">
+          Make sure your answer is typed exactly like the correct hint!
+        </p>
+        <li class="hint1"></li>
+        <li class="hint2"></li>
+        <li class="hint3"></li>
+        <li class="hint4"></li>
+      </ul>
+      <div class="question-div">
+        <input
+          class="question-answer-input"
+          type="text"
+          name="Answer"
+          placeholder="ENTER YOUR ANSWER HERE"
+        />
+        <button class="answer-btn">SUBMIT</button>
+        <input
+          class="wager-input"
+          type="number"
+          name="Answer"
+          placeholder="ENTER WAGER"
+        />
+        <button class="wager-btn">ENTER</button>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="js/data.js"></script>
+  <script type="text/javascript" src="js/domUpdates.js"></script>
+  <script type="text/javascript" src="js/Player.js"></script>
+  <script type="text/javascript" src="js/Question.js"></script>
+  <script type="text/javascript" src="js/Game.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+</html>
